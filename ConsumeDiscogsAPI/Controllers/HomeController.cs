@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace ConsumeDiscogsAPI.Controllers
@@ -18,8 +20,28 @@ namespace ConsumeDiscogsAPI.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            string username = "chrishughandrew";
+            using (HttpClient httpClient = new())
+            {
+                //httpClient.BaseAddress = new Uri("https://api.discogs.com/");
+                httpClient.BaseAddress = new Uri("https://api.discogs.com/");
+
+                //discogs requires a User Agent string
+                string userAgentString = "ConsumeDiscogsAPI/1.0"; //TODO: Discogs wants it in this format "ConsumeDiscogsAPI/1.0" +https://localhost:44309/"; but .NET wont parse it.
+                httpClient.DefaultRequestHeaders.Add("User-Agent", userAgentString);
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response = await httpClient.GetAsync($"users/{username}/wants");
+                //HttpResponseMessage response = await httpClient.GetAsync($"api/character/5");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                }
+            }
+
             return View();
         }
 
