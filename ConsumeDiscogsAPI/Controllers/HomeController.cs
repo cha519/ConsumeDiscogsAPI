@@ -47,19 +47,33 @@ namespace ConsumeDiscogsAPI.Controllers
                 wantlist = JObject.Parse(responseContent);
             }
 
+            // get the desired data from the JObject (ie. ignore the pagination data)
             JArray allWants = (JArray)wantlist["wants"];
 
             List<Record> records = new();
                 
-            // 
+            // iterate over each record in the wantlist 
+            foreach(var want in allWants)
+            {               
 
-            // Select out pertient data from wantlist: id, title, artist, label:name catno; genre, style 
-            // Map each to the Record Class
-            
-            // Add to a Records list
+                // Select out pertient data from wantlist: id, title, artist, labele & catno; genre, style 
+                // And Map each to the Record class
+                Record record = new()
+                {
+                    // [0] used legitimately, to grab the primary/most pertinent instance of that property for simplicity
+                    DiscogsId = (int)want["id"],
+                    Title =     (string)want["basic_information"]["title"],
+                    Artist =    (string)want["basic_information"]["artists"][0]["name"], 
+                    Label =     (string)want["basic_information"]["labels"][0]["name"],
+                    CatNo =     (string)want["basic_information"]["labels"][0]["catno"],
+                    Genre =     (string)want["basic_information"]["genres"][0],
+                    Style =     (string)want["basic_information"]["styles"][0]
+                };
 
-
-               
+                // Add to a Records list
+                records.Add(record);
+            } 
+            // Output list of wantlist records to the view  
             return View(records);
         }
 
