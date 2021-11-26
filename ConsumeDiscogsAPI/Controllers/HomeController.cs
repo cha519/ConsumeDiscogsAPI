@@ -47,17 +47,20 @@ namespace ConsumeDiscogsAPI.Controllers
                 wantlist = JObject.Parse(responseContent);
             }
 
-                // select out pertient data from wantlist: id, title, artist, label:name catno; genre, style 
-                JArray allWants = (JArray)wantlist["wants"];
+            JArray allWants = (JArray)wantlist["wants"];
+
+            List<Record> records = new();
                 
+            // 
 
-                // Map each to a Want Class
-
-                // Add to Wants list
+            // Select out pertient data from wantlist: id, title, artist, label:name catno; genre, style 
+            // Map each to the Record Class
+            
+            // Add to a Records list
 
 
                
-            return View();
+            return View(records);
         }
 
 
