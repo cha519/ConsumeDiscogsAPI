@@ -25,12 +25,13 @@ namespace ConsumeDiscogsAPI.Controllers
         {
             string username = "chrishughandrew";
             JObject wantlist = new();
+
             using (HttpClient httpClient = new())
             {
                 httpClient.BaseAddress = new Uri("https://api.discogs.com/");
 
-                //discogs requires a User Agent string
-                string userAgentString = "ConsumeDiscogsAPI/1.0"; //TODO: Discogs wants it in this format "ConsumeDiscogsAPI/1.0" +https://localhost:44309/"; but .NET wont parse it. Works for now.
+                //discogs requires a User-Agent string
+                string userAgentString = "ConsumeDiscogsAPI/1.0"; //TODO: Discogs wants it in this format "ConsumeDiscogsAPI/1.0" +https://localhost:44309/"; but .NET wont parse it. Works for now. Could be stored in appsetting? 
                 httpClient.DefaultRequestHeaders.Add("User-Agent", userAgentString);
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -55,12 +56,11 @@ namespace ConsumeDiscogsAPI.Controllers
             // iterate over each record in the wantlist 
             foreach(var want in allWants)
             {               
-
                 // Select out pertient data from wantlist: id, title, artist, labele & catno; genre, style 
                 // And Map each to the Record class
                 Record record = new()
                 {
-                    // [0] used legitimately, to grab the primary/most pertinent instance of that property for simplicity
+                    // [0] used, to grab the primary/most pertinent instance of that property for simplicity of those results
                     DiscogsId = (int)want["id"],
                     Title =     (string)want["basic_information"]["title"],
                     Artist =    (string)want["basic_information"]["artists"][0]["name"], 

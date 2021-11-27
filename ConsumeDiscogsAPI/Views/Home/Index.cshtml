@@ -1,8 +1,44 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Wantlist";
 }
+@model List<Record> ;
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <h1 class="display-4">Welcome to Chriscogs</h1>
+    <p>Peruse the vinyl records wantlist below to find your next present for me.</p>
+    <div class="row">
+        <div class="col-xl-2 border-right"></div>
+        <div class="col-xl-8">
+            <table>
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Artist)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Title)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Label)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().CatNo)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Genre)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Style)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var record in Model)
+                    {
+                        <tr>
+                            <td>@record.Artist</td>
+                            <td>@record.Title</td>
+                            <td>@record.Label</td>
+                            <td>@record.CatNo</td>
+                            <td>@record.Genre</td>
+                            <td>@record.Style</td>
+                            <td>View on Discogs button</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xl-2 border-left"></div>
+
+    </div>
+
 </div>
