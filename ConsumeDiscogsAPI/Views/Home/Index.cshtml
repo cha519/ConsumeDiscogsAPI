@@ -5,11 +5,10 @@
 
 <div class="container">
     <h1 class="display-4">Welcome to Chriscogs</h1>
-    <p>Peruse the vinyl records wantlist below to find your next present for me.</p>
-    <div class="row">
-        <div class="col-xl-2 border-right"></div>
-        <div class="col-xl-8">
-            <table>
+    <p>Peruse my vinyl records wantlist below to find your next present for me.</p>
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <table id="wantlist" class="display table table-striped table-responsive-md" style="width:100%">
                 <thead>
                     <tr>
                         <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Artist)</th>
@@ -37,7 +36,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-xl-2 border-left"></div>
+
 
     </div>
 
