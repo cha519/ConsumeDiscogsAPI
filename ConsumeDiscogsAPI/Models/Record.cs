@@ -19,7 +19,7 @@ namespace ConsumeDiscogsAPI.Models
 
         public string DiscogsUrl 
         {
-            get { return $"https://www.discogs.com/release/{DiscogsId}"; } 
+            get { return $"https://www.discogs.com/release/{DiscogsId}/"; } 
         }
         
     }
